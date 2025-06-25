@@ -1,0 +1,7 @@
+flask
+flask-smorest>=0.42.0
+python-dotenv
+sqlalchemy
+flask-sqlalchemy
+flask-jwt-extended
+passlib
