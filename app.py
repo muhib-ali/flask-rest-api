@@ -10,6 +10,8 @@ from resources.store import blp as StoreBluePrint
 from resources.tag import blp as TagBluePrint
 from resources.user import blp as UserBluePrint
 
+from flask_migrate import Migrate
+
 from blocklist import BLOCKLIST
 
 
@@ -27,8 +29,9 @@ def create_app(db_url=None):
  app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
  app.config["SQLALCHEMY_DATABASE_URI"]=db_url or os.getenv("DATABASE_URL","sqlite:///data.db")
  db.init_app(app)
-
+ migrate=Migrate(app,db)
  api= Api(app)
+
 
  app.config["JWT_SECRET_KEY"]="99420730443241968855012365424878534671"
  jwt=JWTManager(app)
@@ -86,8 +89,8 @@ def create_app(db_url=None):
     )
 
 
- with app.app_context():
-      db.create_all()
+#  with app.app_context():
+#       db.create_all()
 
  api.register_blueprint(ItemBluePrint)
  api.register_blueprint(StoreBluePrint)
